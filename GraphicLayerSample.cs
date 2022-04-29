@@ -258,9 +258,11 @@ namespace Ascon.Pilot.SDK.GraphicLayerSample
         {
             foreach (IFile file in dataObject.Files)
             {
-                if (file.Name.Equals("PILOT_GRAPHIC_LAYER_ELEMENT_" + Ascon.Pilot.SDK.GraphicLayerSample.GraphicLayerSample.ToGuid(_currentPerson.Id)))
+                if (file.Name.Equals("PILOT_GRAPHIC_LAYER_ELEMENT_" + ToGuid(_currentPerson.Id)))
                     _modifier.Edit(dataObject).RemoveFile(file.Id);
             }
+            //далее идёт подсчёт количества подписей на документе, сверка этого количества
+            //с количеством запросов на подпись и нанесение неких "штампов", если все согласовали
             int num1 = dataObject.Files.Count (f => f.Name.Contains("Signature"));
             IFile file1 = dataObject.ActualFileSnapshot.Files.FirstOrDefault (f =>
             {
@@ -300,6 +302,8 @@ namespace Ascon.Pilot.SDK.GraphicLayerSample
         {
         }
     }
+    
+    
     [Export(typeof(IMenu<XpsRenderClickPointContext>))]
     public class XpsRenderContextMenuSample : IMenu<XpsRenderClickPointContext>
     {
@@ -317,7 +321,7 @@ namespace Ascon.Pilot.SDK.GraphicLayerSample
         private int _pageNumber;
         private VerticalAlignment _verticalAlignment;
         private HorizontalAlignment _horizontalAlignment;
-        public bool isSigned = false;
+        private bool gotAccess = false;
       //  private IDataObject _dataObject;
         private AccessLevel _accessLevel = AccessLevel.None;
 
@@ -333,54 +337,45 @@ namespace Ascon.Pilot.SDK.GraphicLayerSample
 
         }
 
+
         public void Build(IMenuBuilder builder, XpsRenderClickPointContext context)
+        //создание пунктов меню: "Перенести подпись сюда" и "Перенести сюда и повернуть":
         {
+            //запрос прав на согласование документа:
             _selected = new DataObjectWrapper(context.DataObject, _repository);
             _accessLevel = GetMyAccessLevel(_selected);
             if (_accessLevel.ToString().Contains("Agrement")) 
-                isSigned = true;
+                gotAccess = true;
             else
-                isSigned = false;
-     //       foreach (IFile file in context.DataObject.Files)
-     //       {
-     //           if (file.Name.Equals("PILOT_GRAPHIC_LAYER_ELEMENT_" + Ascon.Pilot.SDK.GraphicLayerSample.GraphicLayerSample.ToGuid(_currentPerson.Id)))
-     //               _modifier.Edit(context.DataObject).RemoveFile(file.Id);
-     //       }
-     //       isSigned = context.DataObject.Files.Any(file => file.Name.Equals(GraphicLayerElementConstants.GRAPHIC_LAYER_ELEMENT + GraphicLayerSample.ToGuid(_currentPerson.Id)));
-            //foreach (var file in context.DataObject.Files) 
-            //{
-            //    if (file.Name.Equals(GraphicLayerElementConstants.GRAPHIC_LAYER_ELEMENT + GraphicLayerSample.ToGuid(_currentPerson.Id)))
-            //        isSigned = true;
-            //}
+                gotAccess = false;
+
+            builder.AddItem(RotateSignatureMenuItem, 0)
+                    .WithHeader(GraphicLayerSample2_1.Properties.Resources.RotateSignatureMenuItem)
+                    .WithIsEnabled(gotAccess); //пункт активен, если есть право согласовывать
             builder.AddItem(MoveSignatureMenuItem, 0)
                    .WithHeader(GraphicLayerSample2_1.Properties.Resources.MoveSignatureMenuItem)
-                   .WithIsEnabled(isSigned);
-            builder.AddItem(RotateSignatureMenuItem, 0)
-                   .WithHeader(GraphicLayerSample2_1.Properties.Resources.RotateSignatureMenuItem)
-                   .WithIsEnabled(isSigned);
+                   .WithIsEnabled(gotAccess); //пункт активен, если есть право согласовывать
         }
 
         public void OnMenuItemClick(string name, XpsRenderClickPointContext context)
         {
             if (name == MoveSignatureMenuItem)
             {
-               // _dataObject = context.DataObject;
-                _pageNumber = context.PageNumber + 1;
-                CheckSettings();
-                _xOffset = (context.ClickPoint.X - 10 / _scaleXY) * 25.4 / 96;
+                CheckSettings(); //чтение натсроек подписи
+                _pageNumber = context.PageNumber + 1; //задание номера страницы
+                _xOffset = (context.ClickPoint.X - 10 / _scaleXY) * 25.4 / 96; //установка координат подписи в точку клика мышом
                 _yOffset = (context.ClickPoint.Y - 4 / _scaleXY) * 25.4 / 96;
-                MoveSignatureToCurrentPage(context.DataObject);
+                UpdateSignatureInXPS(context.DataObject);
             }
 
             else if (name == RotateSignatureMenuItem)
             {
-               // _dataObject = context.DataObject;
                 _pageNumber = context.PageNumber + 1;
                 CheckSettings();
                 _xOffset = (context.ClickPoint.X - 4 / _scaleXY) * 25.4 / 96;
                 _yOffset = (context.ClickPoint.Y + 10 / _scaleXY) * 25.4 / 96;
-                _angle = 270;
-                MoveSignatureToCurrentPage(context.DataObject);
+                _angle = 270;   // задание угла поворота подписи вместо указанного в настройках
+                UpdateSignatureInXPS(context.DataObject);
             }
         }
 
@@ -400,33 +395,15 @@ namespace Ascon.Pilot.SDK.GraphicLayerSample
         }
 
 
-        private void MoveSignatureToCurrentPage(IDataObject dataObject)
+        private void UpdateSignatureInXPS(IDataObject dataObject)
         {
+            //удаление всех файлов с подписью пользователя из документа:
             foreach (IFile file in dataObject.Files)
             {
-                if (file.Name.Equals("PILOT_GRAPHIC_LAYER_ELEMENT_" + Ascon.Pilot.SDK.GraphicLayerSample.GraphicLayerSample.ToGuid(_currentPerson.Id)))
+                if (file.Name.Equals("PILOT_GRAPHIC_LAYER_ELEMENT_" + GraphicLayerSample.ToGuid(_currentPerson.Id)))
                     _modifier.Edit(dataObject).RemoveFile(file.Id);
             }
-            int num1 = dataObject.Files.Count(f => f.Name.Contains("Signature"));
-            IFile file1 = dataObject.ActualFileSnapshot.Files.FirstOrDefault(f =>
-            {
-                string extension = Path.GetExtension(f.Name);
-                return extension != null && (extension.Equals(".xps") || extension.Equals(".dwfx"));
-            });
-            int? count = file1?.Signatures.Count;
-            file1.Signatures.Count(f => _currentPerson.AllOrgUnits().Contains(f.PositionId) && f.Sign != null);
-            int? nullable = count;
-            int num2 = num1;
-            if (nullable.GetValueOrDefault() == num2 & nullable.HasValue && _includeStamp)
-            {
-                string xamlObject1 = GraphicLayerElementCreator.CreateStamp1().ToString();
-                SaveToDataBaseXaml(dataObject, xamlObject1, Guid.NewGuid());
-                string xamlObject2 = GraphicLayerElementCreator.CreateStamp2().ToString();
-                SaveToDataBaseXaml(dataObject, xamlObject2, Guid.NewGuid());
-            }
             SaveToDataBaseRastr(dataObject);
-
-
         }
 
         private void SaveToDataBaseXaml(IDataObject dataObject, string xamlObject, Guid elementId)
