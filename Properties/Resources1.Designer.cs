@@ -232,6 +232,15 @@ namespace GraphicLayerSample2_1.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Type text here.
+        /// </summary>
+        public static string txtInputText {
+            get {
+                return ResourceManager.GetString("txtInputText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Graphic layer settings.
         /// </summary>
         public static string txtMenuItem {

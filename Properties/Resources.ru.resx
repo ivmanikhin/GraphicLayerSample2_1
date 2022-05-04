@@ -174,4 +174,10 @@
   <data name="txtMenuItem" xml:space="preserve">
     <value>Настройка графического слоя (test)</value>
   </data>
+  <data name="AddTextLayerMenuItem" xml:space="preserve">
+    <value>Добавить надпись</value>
+  </data>
+  <data name="txtInputText" xml:space="preserve">
+    <value>Введите текст</value>
+  </data>
 </root>

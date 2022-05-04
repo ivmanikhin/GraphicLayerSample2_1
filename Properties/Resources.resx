@@ -174,4 +174,10 @@
   <data name="RotateSignatureMenuItem" xml:space="preserve">
     <value>Move signature here and rotate</value>
   </data>
+  <data name="AddTextLayerMenuItem" xml:space="preserve">
+    <value>Add text</value>
+  </data>
+  <data name="txtInputText" xml:space="preserve">
+    <value>Type text here</value>
+  </data>
 </root>

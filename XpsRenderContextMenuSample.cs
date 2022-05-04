@@ -15,6 +15,7 @@ using System.Collections.Generic;
 using System.Windows;
 using System.Xml.Serialization;
 using Ascon.Pilot.SDK.ObjectsSample;
+using System.Xml.Linq;
 
 namespace Ascon.Pilot.SDK.GraphicLayerSample
 {
@@ -40,6 +41,7 @@ namespace Ascon.Pilot.SDK.GraphicLayerSample
         private AccessLevel _accessLevel = AccessLevel.None;
         private const string MoveSignatureMenuItem = "MoveSignatureMenuItem";
         private const string RotateSignatureMenuItem = "RotateSignatureMenuItem";
+        private const string AddTextLayerMenuItem = "AddTextLayerMenuItem";
 
         [ImportingConstructor]
         public XpsRenderContextMenuSample(IObjectModifier modifier, IObjectsRepository repository)
@@ -68,6 +70,9 @@ namespace Ascon.Pilot.SDK.GraphicLayerSample
             builder.AddItem(MoveSignatureMenuItem, 0)
                    .WithHeader(GraphicLayerSample2_1.Properties.Resources.MoveSignatureMenuItem)
                    .WithIsEnabled(gotAccess); //пункт меню активен, если есть право согласовывать
+            builder.AddItem(AddTextLayerMenuItem, 0)
+                   .WithHeader(GraphicLayerSample2_1.Properties.Resources.AddTextLayerMenuItem)
+                   .WithIsEnabled(gotAccess); //пункт меню активен, если есть право согласовывать
         }
 
         public void OnMenuItemClick(string name, XpsRenderClickPointContext context)
@@ -89,6 +94,46 @@ namespace Ascon.Pilot.SDK.GraphicLayerSample
                 _yOffset = (context.ClickPoint.Y + 10 / _scaleXY) * 25.4 / 96;
                 _angle = 270;   // задание угла поворота подписи вместо указанного в настройках
                 UpdateRastrInXPS(context.DataObject);
+            }
+
+            else if (name == AddTextLayerMenuItem)
+            {
+                _pageNumber = context.PageNumber + 1; //задание номера страницы
+                _xOffset = (context.ClickPoint.X) * 25.4 / 96; //установка координат подписи в точку клика мышом
+                _yOffset = (context.ClickPoint.Y) * 25.4 / 96;
+                _scaleXY = 1;
+                _angle = 0;
+                AddGraphicLayerTextElement(context.DataObject, "asdjflajsdfl");
+            }
+        }
+
+
+        private void AddGraphicLayerTextElement(IDataObject dataObject, string text)
+        {
+            var elementId = Guid.NewGuid();
+            string xamlObject1 = XElement.Parse(string.Format("<TextBlock Foreground=\"Black\" FontSize=\"20\" TextAlignment=\"Center\">" + text + "</TextBlock>")).ToString();
+            SaveToDataBaseXaml(dataObject, xamlObject1, Guid.NewGuid());
+        }
+
+
+        private void SaveToDataBaseXaml(IDataObject dataObject, string xamlObject, Guid elementId)
+        {
+            IObjectBuilder objectBuilder = _modifier.Edit(dataObject);
+            MemoryStream memoryStream1 = new MemoryStream();
+            using (StreamWriter streamWriter = new StreamWriter(memoryStream1))
+            {
+                streamWriter.Write(xamlObject);
+                streamWriter.Flush();
+                int position = _currentPerson.MainPosition.Position;
+                string name = "PILOT_GRAPHIC_LAYER_ELEMENT_" + elementId + "_" + position;
+                GraphicLayerElement o = GraphicLayerElementCreator.Create(_xOffset, _yOffset, new Point(_scaleXY, _scaleXY), _angle, position, _verticalAlignment, _horizontalAlignment, "xaml", elementId, _pageNumber, true);
+                using (MemoryStream memoryStream2 = new MemoryStream())
+                {
+                    new XmlSerializer(typeof(GraphicLayerElement)).Serialize(memoryStream2, o);
+                    objectBuilder.AddFile(name, memoryStream2, DateTime.Now, DateTime.Now, DateTime.Now);
+                }
+                objectBuilder.AddFile("PILOT_CONTENT_GRAPHIC_LAYER_ELEMENT_" + o.ContentId, memoryStream1, DateTime.Now, DateTime.Now, DateTime.Now);
+                _modifier.Apply();
             }
         }
 
@@ -114,7 +159,7 @@ namespace Ascon.Pilot.SDK.GraphicLayerSample
         }
 
       
-        private void SaveToDataBaseRastr(Ascon.Pilot.SDK.IDataObject dataObject)
+        private void SaveToDataBaseRastr(IDataObject dataObject)
         {
             if (string.IsNullOrEmpty(_filePath))
                 return;
@@ -126,8 +171,8 @@ namespace Ascon.Pilot.SDK.GraphicLayerSample
                 fileStream.Read(buffer, 0, (int)fileStream.Length);
                 MemoryStream memoryStream1 = new MemoryStream(buffer);
                 Point scale = new Point(_scaleXY, _scaleXY);
-                string name = "PILOT_GRAPHIC_LAYER_ELEMENT_" + Ascon.Pilot.SDK.GraphicLayerSample.GraphicLayerSample.ToGuid(_currentPerson.Id);
-                GraphicLayerElement o = GraphicLayerElementCreator.Create(_xOffset, _yOffset, scale, _angle, position, _verticalAlignment, _horizontalAlignment, "bitmap", Ascon.Pilot.SDK.GraphicLayerSample.GraphicLayerSample.ToGuid(_currentPerson.Id), _pageNumber, true);
+                string name = "PILOT_GRAPHIC_LAYER_ELEMENT_" + GraphicLayerSample.ToGuid(_currentPerson.Id);
+                GraphicLayerElement o = GraphicLayerElementCreator.Create(_xOffset, _yOffset, scale, _angle, position, _verticalAlignment, _horizontalAlignment, "bitmap", GraphicLayerSample.ToGuid(_currentPerson.Id), _pageNumber, true);
                 using (MemoryStream memoryStream2 = new MemoryStream())
                 {
                     new XmlSerializer(typeof(GraphicLayerElement)).Serialize(memoryStream2, o);

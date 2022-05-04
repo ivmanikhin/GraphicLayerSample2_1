@@ -166,7 +166,7 @@ namespace Ascon.Pilot.SDK.GraphicLayerSample
                 MemoryStream memoryStream1 = new MemoryStream(buffer);
                 Point scale = new Point(_scaleXY, _scaleXY);
                 string name = "PILOT_GRAPHIC_LAYER_ELEMENT_" + ToGuid(_currentPerson.Id);
-                GraphicLayerElement o = GraphicLayerElementCreator.Create(_xOffset, _yOffset, scale, _angle, position, _verticalAlignment, _horizontalAlignment, "bitmap", Ascon.Pilot.SDK.GraphicLayerSample.GraphicLayerSample.ToGuid(_currentPerson.Id), _pageNumber, true);
+                GraphicLayerElement o = GraphicLayerElementCreator.Create(_xOffset, _yOffset, scale, _angle, position, _verticalAlignment, _horizontalAlignment, "bitmap", ToGuid(_currentPerson.Id), _pageNumber, true);
                 using (MemoryStream memoryStream2 = new MemoryStream())
                 {
                     new XmlSerializer(typeof (GraphicLayerElement)).Serialize(memoryStream2, o);
@@ -237,7 +237,7 @@ namespace Ascon.Pilot.SDK.GraphicLayerSample
                 if (num2 == 0)
                     return;
                 ObjectLoader loader = new ObjectLoader(_repository);
-                Ascon.Pilot.SDK.IDataObject obj = await loader.Load(value.ObjectId);
+                IDataObject obj = await loader.Load(value.ObjectId);
                 if (!obj.Files.Any(f => f.Name.Contains("Signature")))
                     return;
                 AddGraphicLayer(obj);
