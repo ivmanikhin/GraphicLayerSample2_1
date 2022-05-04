@@ -70,6 +70,15 @@ namespace GraphicLayerSample2_1.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add text.
+        /// </summary>
+        public static string AddTextLayerMenuItem {
+            get {
+                return ResourceManager.GetString("AddTextLayerMenuItem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Angle.
         /// </summary>
         public static string Angle {
