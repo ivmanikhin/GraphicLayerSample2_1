@@ -34,7 +34,7 @@
                      VerticalAlignment="Stretch"
                      HorizontalAlignment="Stretch"
                      AcceptsReturn="True"
-                     Text=""
+                     Text="Согласовано Госзаказчиком письмом № 920-300/8-XXXе от XX.XX.XXXX&#x0a;Согласовано ООО &quot;ССК &quot;Звезда&quot; письмом № XXXXX от XX.XX.XXXX"
                      Margin="0,6,0,0"
                      TextWrapping="Wrap"
                      InputScope="Default"

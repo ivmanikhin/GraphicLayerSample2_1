@@ -123,7 +123,7 @@ namespace Ascon.Pilot.SDK.GraphicLayerSample
         private void AddGraphicLayerTextElement(IDataObject dataObject, string text, string fontSize)
         {
             var elementId = Guid.NewGuid();
-            string xamlObject1 = XElement.Parse(string.Format("<TextBlock Foreground=\"Black\" FontSize=\"" + fontSize + "\" TextAlignment=\"Left\">" + text + "</TextBlock>")).ToString();
+            string xamlObject1 = XElement.Parse(string.Format("<TextBlock Foreground=\"Black\" FontFamily=\"Times New Roman\" FontSize=\"" + fontSize + "\" TextAlignment=\"Left\">" + text + "</TextBlock>")).ToString();
             SaveToDataBaseXaml(dataObject, xamlObject1, Guid.NewGuid());
         }
 
