@@ -42,6 +42,9 @@ namespace Ascon.Pilot.SDK.GraphicLayerSample
         private const string MoveSignatureMenuItem = "MoveSignatureMenuItem";
         private const string RotateSignatureMenuItem = "RotateSignatureMenuItem";
         private const string AddTextLayerMenuItem = "AddTextLayerMenuItem";
+        //private int fontSize = 14;
+        private string text = "000000";
+        private string fontSize = "20";
 
         [ImportingConstructor]
         public XpsRenderContextMenuSample(IObjectModifier modifier, IObjectsRepository repository)
@@ -59,10 +62,7 @@ namespace Ascon.Pilot.SDK.GraphicLayerSample
             //запрос прав на согласование документа:
             _selected = new DataObjectWrapper(context.DataObject, _repository);
             _accessLevel = GetMyAccessLevel(_selected);
-            if (_accessLevel.ToString().Contains("Agrement")) 
-                gotAccess = true;
-            else
-                gotAccess = false;
+            gotAccess = _accessLevel.ToString().Contains("Agrement");
 
             builder.AddItem(RotateSignatureMenuItem, 0)
                    .WithHeader(GraphicLayerSample2_1.Properties.Resources.RotateSignatureMenuItem)
@@ -99,19 +99,31 @@ namespace Ascon.Pilot.SDK.GraphicLayerSample
             else if (name == AddTextLayerMenuItem)
             {
                 _pageNumber = context.PageNumber + 1; //задание номера страницы
-                _xOffset = (context.ClickPoint.X) * 25.4 / 96; //установка координат подписи в точку клика мышом
+                _xOffset = (context.ClickPoint.X) * 25.4 / 96; //установка координат в точку клика мышом
                 _yOffset = (context.ClickPoint.Y) * 25.4 / 96;
                 _scaleXY = 1;
                 _angle = 0;
-                AddGraphicLayerTextElement(context.DataObject, "asdjflajsdfl");
+                TextEditorView textEditorView = new TextEditorView();
+                textEditorView.ShowDialog();
+                if (!textEditorView.cancel)
+                {
+                    fontSize = textEditorView.fontSize;
+                    if (!int.TryParse(fontSize, out int intFontSize))
+                        intFontSize = 20;
+                    fontSize = intFontSize.ToString();
+                    text = textEditorView.text.Replace("\n", "<LineBreak />");
+                    if (text != "")
+                        AddGraphicLayerTextElement(context.DataObject, text, fontSize);
+                }
+                    
             }
         }
 
 
-        private void AddGraphicLayerTextElement(IDataObject dataObject, string text)
+        private void AddGraphicLayerTextElement(IDataObject dataObject, string text, string fontSize)
         {
             var elementId = Guid.NewGuid();
-            string xamlObject1 = XElement.Parse(string.Format("<TextBlock Foreground=\"Black\" FontSize=\"20\" TextAlignment=\"Center\">" + text + "</TextBlock>")).ToString();
+            string xamlObject1 = XElement.Parse(string.Format("<TextBlock Foreground=\"Black\" FontSize=\"" + fontSize + "\" TextAlignment=\"Left\">" + text + "</TextBlock>")).ToString();
             SaveToDataBaseXaml(dataObject, xamlObject1, Guid.NewGuid());
         }
 

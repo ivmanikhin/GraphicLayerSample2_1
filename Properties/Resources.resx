@@ -178,6 +178,9 @@
     <value>Add text</value>
   </data>
   <data name="txtInputText" xml:space="preserve">
-    <value>Type text here</value>
+    <value>Type text here:</value>
+  </data>
+  <data name="txtFontSize" xml:space="preserve">
+    <value>Font size:</value>
   </data>
 </root>

@@ -8,13 +8,10 @@
              xmlns:graphicLayerSample="clr-namespace:Ascon.Pilot.SDK.GraphicLayerSample"
              xmlns:p="clr-namespace:GraphicLayerSample2_1.Properties"
              mc:Ignorable="d"
-             Title="{x:Static p:Resources.Title}"
-             Width="500" 
+             Title="{x:Static p:Resources.txtInputText}"
+             Width="600" 
              Height="410" 
-             ResizeMode="NoResize"
-             d:DataContext="{d:DesignInstance graphicLayerSample:GraphicLayerElementSettingsModel}"
-             d:DesignHeight="230" 
-             d:DesignWidth="300">
+             ResizeMode="CanResize">
 
     <controls:DialogWindow.Resources>
         <ResourceDictionary>
@@ -29,30 +26,53 @@
 
     <Grid>
 
-        <StackPanel Orientation="Vertical" Margin="6,0,6,6" Grid.RowSpan="2">
-            <TextBlock x:Name="TextBlockPage" VerticalAlignment="Center" TextWrapping="Wrap"
-                        Text="{x:Static p:Resources.PageNumber}"
-                        Foreground="{DynamicResource NormalForeground}"
-                        FontSize="{DynamicResource DefaultFontSize}" Margin="0,6,0,0" />
-            <TextBox x:Name="TxbPage"
-                        Text="{Binding PageNumber}"
-                        Margin="0,6,0,0"
-                        Height="151"/>
-        </StackPanel>
+
+            <DockPanel Margin="0,0,0,30"
+                       VerticalAlignment="Stretch"
+                       HorizontalAlignment="Stretch">
+                <TextBox x:Name="inputText"
+                     VerticalAlignment="Stretch"
+                     HorizontalAlignment="Stretch"
+                     AcceptsReturn="True"
+                     Text=""
+                     Margin="0,6,0,0"
+                     TextWrapping="Wrap"
+                     InputScope="Default"
+                     VerticalScrollBarVisibility="Auto"/>
+            </DockPanel>
+
+
+
 
         <DockPanel VerticalAlignment="Bottom"
-                   HorizontalAlignment="Right" Height="20" Width="74">
+                   Margin="0,0,0,0"
+                   HorizontalAlignment="Left">
+            <TextBlock x:Name="TextBlockFontSize" VerticalAlignment="Top" TextWrapping="Wrap"
+                        Text="{x:Static p:Resources.txtFontSize}"
+                        Foreground="{DynamicResource NormalForeground}"
+                        FontSize="{DynamicResource DefaultFontSize}" Margin="0,6,0,0" />
+            <TextBox x:Name="inputFontSize"
+                         VerticalAlignment="Bottom"
+                         HorizontalAlignment="Left"
+                         Margin="6,0,0,0"
+                         Text="20"
+                         InputScope="Number"/>
+        </DockPanel>
+
+        <DockPanel VerticalAlignment="Bottom"
+                   Margin="0,0,0,0"
+                   HorizontalAlignment="Right">
 
             <Button IsDefault="True"
                     IsEnabled="True"
                     Content="OK"
-                    Click="OnSaveButtonClicked"/>
+                    Click="OnOkButtonClicked"/>
 
-            <Button IsCancel="True"
+            <Button IsDefault="True"
                     IsEnabled="True"
                     Content="{x:Static p:Resources.CancelBtn}"
                     Click="OnCancelButtonClicked"
-                    Margin="8,0,0,0"/>
+                    Margin="6,0,0,0"/>
 
         </DockPanel>
 

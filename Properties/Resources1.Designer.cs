@@ -232,7 +232,16 @@ namespace GraphicLayerSample2_1.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Type text here.
+        ///   Looks up a localized string similar to Font size:.
+        /// </summary>
+        public static string txtFontSize {
+            get {
+                return ResourceManager.GetString("txtFontSize", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Type text here:.
         /// </summary>
         public static string txtInputText {
             get {

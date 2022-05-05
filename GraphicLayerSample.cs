@@ -123,7 +123,7 @@ namespace Ascon.Pilot.SDK.GraphicLayerSample
             elementSettingsView.DataContext = _model;
             _settingsView = elementSettingsView;
             _settingsView.Unloaded += new RoutedEventHandler(SettingsViewOnUnloaded);
-            new WindowInteropHelper(_settingsView).Owner = Ascon.Pilot.SDK.GraphicLayerSample.GraphicLayerSample.GetForegroundWindow();
+            new WindowInteropHelper(_settingsView).Owner = GetForegroundWindow();
             _settingsView.ShowDialog();
             Dispatcher.Run();
         }

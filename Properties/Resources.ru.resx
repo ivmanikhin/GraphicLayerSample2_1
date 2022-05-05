@@ -178,6 +178,9 @@
     <value>Добавить надпись</value>
   </data>
   <data name="txtInputText" xml:space="preserve">
-    <value>Введите текст</value>
+    <value>Введите текст:</value>
+  </data>
+  <data name="txtFontSize" xml:space="preserve">
+    <value>Размер шрифта:</value>
   </data>
 </root>
