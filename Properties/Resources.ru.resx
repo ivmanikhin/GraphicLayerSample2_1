@@ -183,4 +183,7 @@
   <data name="txtFontSize" xml:space="preserve">
     <value>Размер шрифта:</value>
   </data>
+  <data name="AddExtraSignatureMenuItem" xml:space="preserve">
+    <value>Дополнительная подпись здесь</value>
+  </data>
 </root>

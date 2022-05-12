@@ -61,6 +61,15 @@ namespace GraphicLayerSample2_1.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Extra sign here.
+        /// </summary>
+        public static string AddExtraSignatureMenuItem {
+            get {
+                return ResourceManager.GetString("AddExtraSignatureMenuItem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add stamp.
         /// </summary>
         public static string AddStamp {

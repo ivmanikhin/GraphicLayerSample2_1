@@ -42,6 +42,7 @@ namespace Ascon.Pilot.SDK.GraphicLayerSample
         private const string MoveSignatureMenuItem = "MoveSignatureMenuItem";
         private const string RotateSignatureMenuItem = "RotateSignatureMenuItem";
         private const string AddTextLayerMenuItem = "AddTextLayerMenuItem";
+        private const string AddExtraSignatureMenuItem = "AddExtraSignatureMenuItem";
         //private int fontSize = 14;
         private string text = "000000";
         private string fontSize = "20";
@@ -64,15 +65,21 @@ namespace Ascon.Pilot.SDK.GraphicLayerSample
             _accessLevel = GetMyAccessLevel(_selected);
             gotAccess = _accessLevel.ToString().Contains("Agrement");
 
+
+            builder.AddItem(AddTextLayerMenuItem, 0)
+                   .WithHeader(GraphicLayerSample2_1.Properties.Resources.AddTextLayerMenuItem)
+                   .WithIsEnabled(gotAccess); //пункт меню активен, если есть право согласовывать
+            builder.AddItem(AddExtraSignatureMenuItem, 0)
+                   .WithHeader(GraphicLayerSample2_1.Properties.Resources.AddExtraSignatureMenuItem)
+                   .WithIsEnabled(gotAccess); //пункт меню активен, если есть право согласовывать
             builder.AddItem(RotateSignatureMenuItem, 0)
                    .WithHeader(GraphicLayerSample2_1.Properties.Resources.RotateSignatureMenuItem)
                    .WithIsEnabled(gotAccess); //пункт меню активен, если есть право согласовывать
             builder.AddItem(MoveSignatureMenuItem, 0)
                    .WithHeader(GraphicLayerSample2_1.Properties.Resources.MoveSignatureMenuItem)
                    .WithIsEnabled(gotAccess); //пункт меню активен, если есть право согласовывать
-            builder.AddItem(AddTextLayerMenuItem, 0)
-                   .WithHeader(GraphicLayerSample2_1.Properties.Resources.AddTextLayerMenuItem)
-                   .WithIsEnabled(gotAccess); //пункт меню активен, если есть право согласовывать
+
+
         }
 
         public void OnMenuItemClick(string name, XpsRenderClickPointContext context)
@@ -114,8 +121,18 @@ namespace Ascon.Pilot.SDK.GraphicLayerSample
                     if (text != "")
                         AddGraphicLayerTextElement(context.DataObject, text, intFontSize);
                 }
-                    
             }
+
+            else if (name == AddExtraSignatureMenuItem)
+            {
+                CheckSettings(); //чтение натсроек подписи
+                _pageNumber = context.PageNumber + 1; //задание номера страницы
+                _xOffset = (context.ClickPoint.X - 10 / _scaleXY) * 25.4 / 96; //установка координат подписи в точку клика мышом
+                _yOffset = (context.ClickPoint.Y - 4 / _scaleXY) * 25.4 / 96;
+                AddRastrToXPS(context.DataObject);
+            }
+
+            
         }
 
 
@@ -233,7 +250,38 @@ namespace Ascon.Pilot.SDK.GraphicLayerSample
             SaveToDataBaseRastr(dataObject);
         }
 
-      
+
+
+        private void AddRastrToXPS(IDataObject dataObject)
+        {
+
+            var elementId = Guid.NewGuid(); // рандомный GUID
+            if (string.IsNullOrEmpty(_filePath))
+                return;
+            IObjectBuilder objectBuilder = _modifier.Edit(dataObject);
+            using (FileStream fileStream = File.Open(_filePath, FileMode.Open, FileAccess.ReadWrite))
+            {
+                int position = _currentPerson.MainPosition.Position;
+                byte[] buffer = new byte[fileStream.Length];
+                fileStream.Read(buffer, 0, (int)fileStream.Length);
+                MemoryStream memoryStream1 = new MemoryStream(buffer);
+                Point scale = new Point(_scaleXY, _scaleXY);
+                string name = "PILOT_GRAPHIC_LAYER_ELEMENT_" + elementId + "_" + position; //имя файла с записью свойств картинки
+                                                                                           //ПРИВЯЗАНО К ЧЕЛОВЕКУ В ВИДЕ _currentPerson.MainPosition.Position в конце имени файла
+                GraphicLayerElement o = GraphicLayerElementCreator.Create(_xOffset, _yOffset, scale, _angle, position, _verticalAlignment, _horizontalAlignment, "bitmap", elementId, _pageNumber, true);
+                using (MemoryStream memoryStream2 = new MemoryStream())
+                {
+                    new XmlSerializer(typeof(GraphicLayerElement)).Serialize(memoryStream2, o);
+                    objectBuilder.AddFile(name, memoryStream2, DateTime.Now, DateTime.Now, DateTime.Now); //создание записи о расположении картинки на листе
+                    objectBuilder.AddFile("PILOT_CONTENT_GRAPHIC_LAYER_ELEMENT_" + o.ContentId, memoryStream1, DateTime.Now, DateTime.Now, DateTime.Now); //создание файла PNG. НЕ СОДЕРЖИТ ПРИВЯЗКУ К ЧЕЛОВЕКУ.
+                                                                                                                                                          //CONTENT ID - РАНДОМНЫЙ GUID
+                }
+                _modifier.Apply();
+            }
+
+        }
+
+
         private void SaveToDataBaseRastr(IDataObject dataObject)
         {
             if (string.IsNullOrEmpty(_filePath))

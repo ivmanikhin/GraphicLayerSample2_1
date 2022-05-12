@@ -183,4 +183,7 @@
   <data name="txtFontSize" xml:space="preserve">
     <value>Font size:</value>
   </data>
+  <data name="AddExtraSignatureMenuItem" xml:space="preserve">
+    <value>Extra sign here</value>
+  </data>
 </root>
