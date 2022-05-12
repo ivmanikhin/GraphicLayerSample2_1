@@ -281,7 +281,15 @@ namespace Ascon.Pilot.SDK.GraphicLayerSample
             BitConverter.GetBytes(value).CopyTo(b, 0);
             return new Guid(b);
         }
-        
+
+        public static Guid ToGuidMultiple (int value, int number)
+        {
+            byte[] b = new byte[16];
+            BitConverter.GetBytes(value).CopyTo(b, 0);
+            BitConverter.GetBytes(number).CopyTo(b, 1);
+            return new Guid(b);
+        }
+
         public void Handle(UnloadedEventArgs message)
         {
         }

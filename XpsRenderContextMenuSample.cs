@@ -110,24 +110,49 @@ namespace Ascon.Pilot.SDK.GraphicLayerSample
                     fontSize = textEditorView.fontSize;
                     if (!int.TryParse(fontSize, out int intFontSize))
                         intFontSize = 20;
-                    fontSize = intFontSize.ToString();
-                    text = textEditorView.text.Replace("\n", "<LineBreak />");
+                    text = textEditorView.text/*.Replace("\n", "<LineBreak />") относилось к печати в виде XAML*/;
                     if (text != "")
-                        AddGraphicLayerTextElement(context.DataObject, text, fontSize);
+                        AddGraphicLayerTextElement(context.DataObject, text, intFontSize);
                 }
                     
             }
         }
 
 
-        private void AddGraphicLayerTextElement(IDataObject dataObject, string text, string fontSize)
+        private void AddGraphicLayerTextElement(IDataObject dataObject, string text, int intFontSize)
         {
-            var elementId = Guid.NewGuid();
-            string xamlObject1 = XElement.Parse(string.Format("<TextBlock Foreground=\"Black\" FontFamily=\"Times New Roman\" FontSize=\"" + fontSize + "\" TextAlignment=\"Left\">" + text + "</TextBlock>")).ToString();
-            SaveToDataBaseXaml(dataObject, xamlObject1, Guid.NewGuid());
+            var elementId = Guid.NewGuid(); // рандомный GUID
+            System.Drawing.Image textImage = TextToImage(text, "Katherine Plus", intFontSize * 4); //рисование текста в bitmap
+            /* втавка текста в виде текста (устарело):
+            string xamlObject1 = XElement.Parse(string.Format("<TextBlock Foreground=\"Black\" FontSize=\"" + fontSize + "\" TextAlignment=\"Left\">" + text + "</TextBlock>")).ToString();
+            SaveToDataBaseXaml(dataObject, xamlObject1, elementId);
+            */
+            SaveToDataBaseTextBitmap(dataObject, textImage, elementId);
         }
 
 
+        private void SaveToDataBaseTextBitmap(IDataObject dataObject, System.Drawing.Image textBitmap, Guid elementId)
+        {
+            IObjectBuilder objectBuilder = _modifier.Edit(dataObject);
+            int position = _currentPerson.MainPosition.Position;
+            MemoryStream memoryStream1 = new MemoryStream();
+            textBitmap.Save(memoryStream1, System.Drawing.Imaging.ImageFormat.Png);
+            Point scale = new Point(0.25, 0.25);
+            string name = "PILOT_GRAPHIC_LAYER_ELEMENT_" + elementId + "_" + position; //имя файла с записью свойств картинки
+                                                                                       //ПРИВЯЗАНО К ЧЕЛОВЕКУ В ВИДЕ _currentPerson.MainPosition.Position в конце имени файла
+            GraphicLayerElement o = GraphicLayerElementCreator.Create(_xOffset, _yOffset, scale, 0, position, _verticalAlignment, _horizontalAlignment, "bitmap", elementId, _pageNumber, true);
+            using (MemoryStream memoryStream2 = new MemoryStream())
+            {
+                new XmlSerializer(typeof(GraphicLayerElement)).Serialize(memoryStream2, o);
+                objectBuilder.AddFile(name, memoryStream2, DateTime.Now, DateTime.Now, DateTime.Now); //создание записи о расположении картинки на листе
+                objectBuilder.AddFile("PILOT_CONTENT_GRAPHIC_LAYER_ELEMENT_" + o.ContentId, memoryStream1, DateTime.Now, DateTime.Now, DateTime.Now); //создание файла PNG. НЕ СОДЕРЖИТ ПРИВЯЗКУ К ЧЕЛОВЕКУ.
+                                                                                                                                                      //CONTENT ID - РАНДОМНЫЙ GUID
+            }
+            _modifier.Apply();
+
+        }
+
+        /* Сохранение текста в виде XAML (устарело):
         private void SaveToDataBaseXaml(IDataObject dataObject, string xamlObject, Guid elementId)
         {
             IObjectBuilder objectBuilder = _modifier.Edit(dataObject);
@@ -137,16 +162,53 @@ namespace Ascon.Pilot.SDK.GraphicLayerSample
                 streamWriter.Write(xamlObject);
                 streamWriter.Flush();
                 int position = _currentPerson.MainPosition.Position;
-                string name = "PILOT_GRAPHIC_LAYER_ELEMENT_" + elementId + "_" + position;
+                string name = "PILOT_GRAPHIC_LAYER_ELEMENT_" + elementId + "_" + position; //имя файла записи с рандомным elementID и привязкой к человеку через ID пользователя
                 GraphicLayerElement o = GraphicLayerElementCreator.Create(_xOffset, _yOffset, new Point(_scaleXY, _scaleXY), _angle, position, _verticalAlignment, _horizontalAlignment, "xaml", elementId, _pageNumber, true);
                 using (MemoryStream memoryStream2 = new MemoryStream())
                 {
                     new XmlSerializer(typeof(GraphicLayerElement)).Serialize(memoryStream2, o);
                     objectBuilder.AddFile(name, memoryStream2, DateTime.Now, DateTime.Now, DateTime.Now);
                 }
-                objectBuilder.AddFile("PILOT_CONTENT_GRAPHIC_LAYER_ELEMENT_" + o.ContentId, memoryStream1, DateTime.Now, DateTime.Now, DateTime.Now);
+                objectBuilder.AddFile("PILOT_CONTENT_GRAPHIC_LAYER_ELEMENT_" + o.ContentId, memoryStream1, DateTime.Now, DateTime.Now, DateTime.Now); //создаёт файл с текстом XAML с рандомным именем.
+                                                                                                                                                      //PILOT_CONTENT_GRAPHIC_LAYER_ELEMENT_ в распакованном XPS не найден.
+                                                                                                                                                      //contentId всегда рандомный
                 _modifier.Apply();
             }
+        }
+        */
+
+
+        private System.Drawing.Image TextToImage(string text, string fontName, int intFontSize)
+            //рисовалка текста, чтобы отвязаться от установленных у пользователей шрифтов
+        {
+            System.Drawing.Font font = new System.Drawing.Font(fontName, intFontSize);
+            //first, create a dummy bitmap just to get a graphics object
+            System.Drawing.Image img = new System.Drawing.Bitmap(1, 1);
+            System.Drawing.Graphics drawing = System.Drawing.Graphics.FromImage(img);
+
+            //measure the string to see how big the image needs to be
+            System.Drawing.SizeF textSize = drawing.MeasureString(text, font);
+
+            //free up the dummy image and old graphics object
+            img.Dispose();
+            drawing.Dispose();
+
+            //create a new image of the right size
+            img = new System.Drawing.Bitmap((int)textSize.Width, (int)textSize.Height);
+            drawing = System.Drawing.Graphics.FromImage(img);
+
+            //create a brush for the text
+            System.Drawing.Brush textBrush = new System.Drawing.SolidBrush(System.Drawing.Color.Black);
+            //drawing.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias; //не оправдало себя
+            //drawing.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias; //не оправдало себя
+            drawing.DrawString(text, font, textBrush, 0, 0);
+
+            drawing.Save();
+
+            textBrush.Dispose();
+            drawing.Dispose();
+
+            return img;
         }
 
         private void CheckSettings()
@@ -166,6 +228,7 @@ namespace Ascon.Pilot.SDK.GraphicLayerSample
             {
                 if (file.Name.Equals("PILOT_GRAPHIC_LAYER_ELEMENT_" + GraphicLayerSample.ToGuid(_currentPerson.Id)))
                     _modifier.Edit(dataObject).RemoveFile(file.Id);
+                    
             }
             SaveToDataBaseRastr(dataObject);
         }
@@ -183,13 +246,15 @@ namespace Ascon.Pilot.SDK.GraphicLayerSample
                 fileStream.Read(buffer, 0, (int)fileStream.Length);
                 MemoryStream memoryStream1 = new MemoryStream(buffer);
                 Point scale = new Point(_scaleXY, _scaleXY);
-                string name = "PILOT_GRAPHIC_LAYER_ELEMENT_" + GraphicLayerSample.ToGuid(_currentPerson.Id);
+                string name = "PILOT_GRAPHIC_LAYER_ELEMENT_" + GraphicLayerSample.ToGuid(_currentPerson.Id); //имя файла с записью свойств картинки
+                                                                                                             //ПРИВЯЗАНО К ЧЕЛОВЕКУ В ВИДЕ GUID C НУЛЯМИ (В ОСНОВНОМ)
                 GraphicLayerElement o = GraphicLayerElementCreator.Create(_xOffset, _yOffset, scale, _angle, position, _verticalAlignment, _horizontalAlignment, "bitmap", GraphicLayerSample.ToGuid(_currentPerson.Id), _pageNumber, true);
                 using (MemoryStream memoryStream2 = new MemoryStream())
                 {
                     new XmlSerializer(typeof(GraphicLayerElement)).Serialize(memoryStream2, o);
-                    objectBuilder.AddFile(name, memoryStream2, DateTime.Now, DateTime.Now, DateTime.Now);
-                    objectBuilder.AddFile("PILOT_CONTENT_GRAPHIC_LAYER_ELEMENT_" + o.ContentId, memoryStream1, DateTime.Now, DateTime.Now, DateTime.Now);
+                    objectBuilder.AddFile(name, memoryStream2, DateTime.Now, DateTime.Now, DateTime.Now); //создание записи о расположении картинки на листе
+                    objectBuilder.AddFile("PILOT_CONTENT_GRAPHIC_LAYER_ELEMENT_" + o.ContentId, memoryStream1, DateTime.Now, DateTime.Now, DateTime.Now); //создание файла PNG. НЕ СОДЕРЖИТ ПРИВЯЗКУ К ЧЕЛОВЕКУ.
+                                                                                                                                                          //CONTENT ID - РАНДОМНЫЙ GUID
                 }
                 _modifier.Apply();
             }

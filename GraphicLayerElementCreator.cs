@@ -30,9 +30,9 @@ namespace Ascon.Pilot.SDK.GraphicLayerSample
       int pageNumber,
       bool isFloating)
     {
-      int num = 96;
-      double offsetX = xOffsetFromSettings / 25.4 * (double) num;
-      double offsetY = yOffsetFromSettings / 25.4 * (double) num;
+      int dpi = 96;
+      double offsetX = xOffsetFromSettings / 25.4 * (double) dpi;
+      double offsetY = yOffsetFromSettings / 25.4 * (double) dpi;
       Guid contentId = Guid.NewGuid();
       return new GraphicLayerElement(elementId, contentId, offsetX, offsetY, position, scale, angle, verticalAlignment, horizontalAlignment, contentType, pageNumber - 1, isFloating);
     }
