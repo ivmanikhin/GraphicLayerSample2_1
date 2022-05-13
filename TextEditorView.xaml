@@ -1,4 +1,4 @@
-﻿<controls:DialogWindow x:Class="Ascon.Pilot.SDK.GraphicLayerSample.TextEditorView"
+﻿<controls:DialogWindow
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -7,11 +7,12 @@
              xmlns:tools="clr-namespace:Ascon.Pilot.Theme.Tools;assembly=Ascon.Pilot.Theme"
              xmlns:graphicLayerSample="clr-namespace:Ascon.Pilot.SDK.GraphicLayerSample"
              xmlns:p="clr-namespace:GraphicLayerSample2_1.Properties"
+             xmlns:Forms="clr-namespace:System.Windows.Forms;assembly=System.Windows.Forms" x:Class="Ascon.Pilot.SDK.GraphicLayerSample.TextEditorView"
              mc:Ignorable="d"
              Title="{x:Static p:Resources.txtInputText}"
-             Width="600" 
+             Width="850" 
              Height="410" 
-             ResizeMode="CanResize">
+             ResizeMode="NoResize">
 
     <controls:DialogWindow.Resources>
         <ResourceDictionary>
@@ -27,19 +28,19 @@
     <Grid>
 
 
-            <DockPanel Margin="0,0,0,30"
+        <DockPanel Margin="0,0,0,45"
                        VerticalAlignment="Stretch"
                        HorizontalAlignment="Stretch">
-                <TextBox x:Name="inputText"
+            <TextBox x:Name="inputText"
                      VerticalAlignment="Stretch"
                      HorizontalAlignment="Stretch"
                      AcceptsReturn="True"
-                     Text="Согласовано Госзаказчиком письмом № 920-300/8-XXXе от XX.XX.XXXX&#x0a;Согласовано ООО &quot;ССК &quot;Звезда&quot; письмом № XXXXX от XX.XX.XXXX"
+                     Text="Согласовано Госзаказчиком письмом № 920-300/8-XXXе от XX.XX.XXXX&#xA;Согласовано ООО &quot;ССК &quot;Звезда&quot; письмом № XXXXX от XX.XX.XXXX"
                      Margin="0,6,0,0"
                      TextWrapping="Wrap"
                      InputScope="Default"
                      VerticalScrollBarVisibility="Auto"/>
-            </DockPanel>
+        </DockPanel>
 
 
 
@@ -47,16 +48,63 @@
         <DockPanel VerticalAlignment="Bottom"
                    Margin="0,0,0,0"
                    HorizontalAlignment="Left">
-            <TextBlock x:Name="TextBlockFontSize" VerticalAlignment="Top" TextWrapping="Wrap"
+            <TextBlock  VerticalAlignment="Top" TextWrapping="Wrap"
                         Text="{x:Static p:Resources.txtFontSize}"
                         Foreground="{DynamicResource NormalForeground}"
                         FontSize="{DynamicResource DefaultFontSize}" Margin="0,6,0,0" />
             <TextBox x:Name="inputFontSize"
+                         TextChanged="FontSizeTextChanged"
+                         VerticalAlignment="Top"
+                         HorizontalAlignment="Left"
+                         Margin="6,6,0,0"
+                         Text="12"
+                         InputScope="Digits"/>
+            <TextBlock  VerticalAlignment="Top" TextWrapping="Wrap"
+                        Text="{x:Static p:Resources.txtFontFamily}"
+                        Foreground="{DynamicResource NormalForeground}"
+                        FontSize="{DynamicResource DefaultFontSize}" Margin="20,6,0,0" />
+            <!--<ComboBox x:Name="ComboBoxFontFamily" 
                          VerticalAlignment="Bottom"
                          HorizontalAlignment="Left"
-                         Margin="6,0,0,0"
-                         Text="20"
-                         InputScope="Number"/>
+                         Margin="6,6,0,0">
+                <ComboBoxItem IsSelected="True" Content="Times New Roman"></ComboBoxItem>
+                <ComboBoxItem Content="Katherine Plus"></ComboBoxItem>
+            </ComboBox>-->
+
+            <ListView Margin="6, 6, 0, 0" BorderThickness="0">
+                <RadioButton GroupName="FontFamily"
+                             Checked="PrintedRadioBTNChecked"
+                             IsChecked="True"
+                             Content="{x:Static p:Resources.txtPrintedText}"
+                             HorizontalAlignment="Left"
+                             Margin="0,0,0,0"
+                             VerticalAlignment="Bottom"/>
+                <RadioButton GroupName="FontFamily"
+                             Checked="HandWriteRadioBTNChecked"
+                             Content="{x:Static p:Resources.txtHandWriteText}"
+                             HorizontalAlignment="Left"
+                             Margin="0,0,0,0"
+                             VerticalAlignment="Bottom"/>
+            </ListView>
+            <TextBlock  VerticalAlignment="Top" TextWrapping="Wrap"
+                        Text="{x:Static p:Resources.txtTextColor}"
+                        Foreground="{DynamicResource NormalForeground}"
+                        FontSize="{DynamicResource DefaultFontSize}" Margin="20,6,0,0" />
+            <ListView Margin="6, 6, 0, 0" BorderThickness="0">
+                <RadioButton GroupName="TextColor"
+                             Checked="BlackRadioBTNChecked"
+                             IsChecked="True"
+                             Content="{x:Static p:Resources.txtBlack}"
+                             HorizontalAlignment="Left"
+                             Margin="0,0,0,0"
+                             VerticalAlignment="Bottom"/>
+                <RadioButton GroupName="TextColor"
+                             Checked="NavyRadioBTNChecked"
+                             Content="{x:Static p:Resources.txtNavy}"
+                             HorizontalAlignment="Left"
+                             Margin="0,0,0,0"
+                             VerticalAlignment="Bottom"/>
+            </ListView>
         </DockPanel>
 
         <DockPanel VerticalAlignment="Bottom"
@@ -75,6 +123,7 @@
                     Margin="6,0,0,0"/>
 
         </DockPanel>
+        
 
     </Grid>
 </controls:DialogWindow>

@@ -241,11 +241,38 @@ namespace GraphicLayerSample2_1.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Black.
+        /// </summary>
+        public static string txtBlack {
+            get {
+                return ResourceManager.GetString("txtBlack", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Font:.
+        /// </summary>
+        public static string txtFontFamily {
+            get {
+                return ResourceManager.GetString("txtFontFamily", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Font size:.
         /// </summary>
         public static string txtFontSize {
             get {
                 return ResourceManager.GetString("txtFontSize", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hand write.
+        /// </summary>
+        public static string txtHandWriteText {
+            get {
+                return ResourceManager.GetString("txtHandWriteText", resourceCulture);
             }
         }
         
@@ -264,6 +291,33 @@ namespace GraphicLayerSample2_1.Properties {
         public static string txtMenuItem {
             get {
                 return ResourceManager.GetString("txtMenuItem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Navy.
+        /// </summary>
+        public static string txtNavy {
+            get {
+                return ResourceManager.GetString("txtNavy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Times New Roman.
+        /// </summary>
+        public static string txtPrintedText {
+            get {
+                return ResourceManager.GetString("txtPrintedText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Text color:.
+        /// </summary>
+        public static string txtTextColor {
+            get {
+                return ResourceManager.GetString("txtTextColor", resourceCulture);
             }
         }
     }

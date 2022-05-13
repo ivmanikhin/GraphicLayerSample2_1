@@ -186,4 +186,22 @@
   <data name="AddExtraSignatureMenuItem" xml:space="preserve">
     <value>Дополнительная подпись здесь</value>
   </data>
+  <data name="txtFontFamily" xml:space="preserve">
+    <value>Шрифт:</value>
+  </data>
+  <data name="txtTextColor" xml:space="preserve">
+    <value>Цвет текста:</value>
+  </data>
+  <data name="txtBlack" xml:space="preserve">
+    <value>Чёрный</value>
+  </data>
+  <data name="txtHandWriteText" xml:space="preserve">
+    <value>Рукописный</value>
+  </data>
+  <data name="txtNavy" xml:space="preserve">
+    <value>Синий</value>
+  </data>
+  <data name="txtPrintedText" xml:space="preserve">
+    <value>Печатный</value>
+  </data>
 </root>

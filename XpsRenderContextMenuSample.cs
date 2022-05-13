@@ -46,6 +46,8 @@ namespace Ascon.Pilot.SDK.GraphicLayerSample
         //private int fontSize = 14;
         private string text = "000000";
         private string fontSize = "20";
+        private string fontFamilyName = "Times New Roman";
+        private System.Drawing.Color textColor = System.Drawing.Color.Black;
 
         [ImportingConstructor]
         public XpsRenderContextMenuSample(IObjectModifier modifier, IObjectsRepository repository)
@@ -114,9 +116,11 @@ namespace Ascon.Pilot.SDK.GraphicLayerSample
                 textEditorView.ShowDialog();
                 if (!textEditorView.cancel)
                 {
+                    fontFamilyName = textEditorView.fontFamilyName;
+                    textColor = textEditorView.textColor;
                     fontSize = textEditorView.fontSize;
                     if (!int.TryParse(fontSize, out int intFontSize))
-                        intFontSize = 20;
+                        intFontSize = 12;
                     text = textEditorView.text/*.Replace("\n", "<LineBreak />") относилось к печати в виде XAML*/;
                     if (text != "")
                         AddGraphicLayerTextElement(context.DataObject, text, intFontSize);
@@ -131,15 +135,14 @@ namespace Ascon.Pilot.SDK.GraphicLayerSample
                 _yOffset = (context.ClickPoint.Y - 4 / _scaleXY) * 25.4 / 96;
                 AddRastrToXPS(context.DataObject);
             }
-
-            
+                       
         }
 
 
         private void AddGraphicLayerTextElement(IDataObject dataObject, string text, int intFontSize)
         {
             var elementId = Guid.NewGuid(); // рандомный GUID
-            System.Drawing.Image textImage = TextToImage(text, "Katherine Plus", intFontSize * 4); //рисование текста в bitmap
+            System.Drawing.Image textImage = TextToImage(text, fontFamilyName, intFontSize * 4, textColor); //рисование текста в bitmap
             /* втавка текста в виде текста (устарело):
             string xamlObject1 = XElement.Parse(string.Format("<TextBlock Foreground=\"Black\" FontSize=\"" + fontSize + "\" TextAlignment=\"Left\">" + text + "</TextBlock>")).ToString();
             SaveToDataBaseXaml(dataObject, xamlObject1, elementId);
@@ -195,15 +198,31 @@ namespace Ascon.Pilot.SDK.GraphicLayerSample
         */
 
 
-        private System.Drawing.Image TextToImage(string text, string fontName, int intFontSize)
+        private System.Drawing.Image TextToImage(string text, string fontName, int intFontSize, System.Drawing.Color textColor)
             //рисовалка текста, чтобы отвязаться от установленных у пользователей шрифтов
         {
             System.Drawing.Font font = new System.Drawing.Font(fontName, intFontSize);
+            //System.Drawing.Font handWriteFont = new System.Drawing.Font(fontCollection.Families[0], intFontSize);
+
             //first, create a dummy bitmap just to get a graphics object
             System.Drawing.Image img = new System.Drawing.Bitmap(1, 1);
             System.Drawing.Graphics drawing = System.Drawing.Graphics.FromImage(img);
 
+            //DirectoryInfo d = new DirectoryInfo("/");
+            //FileInfo[] fileArray = d.GetFiles("*.ttf");
+            //string str = "";
+            //foreach (FileInfo file in fileArray)
+            //    str = str + file.DirectoryName + "\n";
+            //text = str;
+
+
             //measure the string to see how big the image needs to be
+            if (fontName == "Katherine Plus")
+            {
+                System.Drawing.Text.PrivateFontCollection fontCollection = new System.Drawing.Text.PrivateFontCollection();
+                fontCollection.AddFontFile("9540.ttf");
+                font = new System.Drawing.Font(fontCollection.Families[0], intFontSize);
+            }
             System.Drawing.SizeF textSize = drawing.MeasureString(text, font);
 
             //free up the dummy image and old graphics object
@@ -215,7 +234,7 @@ namespace Ascon.Pilot.SDK.GraphicLayerSample
             drawing = System.Drawing.Graphics.FromImage(img);
 
             //create a brush for the text
-            System.Drawing.Brush textBrush = new System.Drawing.SolidBrush(System.Drawing.Color.Black);
+            System.Drawing.Brush textBrush = new System.Drawing.SolidBrush(textColor);
             //drawing.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias; //не оправдало себя
             //drawing.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias; //не оправдало себя
             drawing.DrawString(text, font, textBrush, 0, 0);

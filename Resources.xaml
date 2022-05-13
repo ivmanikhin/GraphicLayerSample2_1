@@ -21,5 +21,6 @@
             </DrawingGroup>
         </DrawingImage.Drawing>
     </DrawingImage>
+    <!--<FontFamily x:Key="KatherinePlus">./Fonts/9540.ttf#Katherine Plus</FontFamily>-->
 
 </ResourceDictionary>

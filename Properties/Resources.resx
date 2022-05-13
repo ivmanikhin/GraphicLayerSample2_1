@@ -186,4 +186,22 @@
   <data name="AddExtraSignatureMenuItem" xml:space="preserve">
     <value>Extra sign here</value>
   </data>
+  <data name="txtFontFamily" xml:space="preserve">
+    <value>Font:</value>
+  </data>
+  <data name="txtTextColor" xml:space="preserve">
+    <value>Text color:</value>
+  </data>
+  <data name="txtHandWriteText" xml:space="preserve">
+    <value>Hand write</value>
+  </data>
+  <data name="txtPrintedText" xml:space="preserve">
+    <value>Times New Roman</value>
+  </data>
+  <data name="txtBlack" xml:space="preserve">
+    <value>Black</value>
+  </data>
+  <data name="txtNavy" xml:space="preserve">
+    <value>Navy</value>
+  </data>
 </root>
