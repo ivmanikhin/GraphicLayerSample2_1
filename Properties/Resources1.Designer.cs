@@ -61,29 +61,11 @@ namespace GraphicLayerSample2_1.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Extra sign here.
-        /// </summary>
-        public static string AddExtraSignatureMenuItem {
-            get {
-                return ResourceManager.GetString("AddExtraSignatureMenuItem", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Add stamp.
         /// </summary>
         public static string AddStamp {
             get {
                 return ResourceManager.GetString("AddStamp", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Add text.
-        /// </summary>
-        public static string AddTextLayerMenuItem {
-            get {
-                return ResourceManager.GetString("AddTextLayerMenuItem", resourceCulture);
             }
         }
         
@@ -160,15 +142,6 @@ namespace GraphicLayerSample2_1.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Move signature here.
-        /// </summary>
-        public static string MoveSignatureMenuItem {
-            get {
-                return ResourceManager.GetString("MoveSignatureMenuItem", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to X.
         /// </summary>
         public static string OffsetX {
@@ -205,15 +178,6 @@ namespace GraphicLayerSample2_1.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Move signature here and rotate.
-        /// </summary>
-        public static string RotateSignatureMenuItem {
-            get {
-                return ResourceManager.GetString("RotateSignatureMenuItem", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Scale.
         /// </summary>
         public static string Scale {
@@ -241,83 +205,11 @@ namespace GraphicLayerSample2_1.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Black.
-        /// </summary>
-        public static string txtBlack {
-            get {
-                return ResourceManager.GetString("txtBlack", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Font:.
-        /// </summary>
-        public static string txtFontFamily {
-            get {
-                return ResourceManager.GetString("txtFontFamily", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Font size:.
-        /// </summary>
-        public static string txtFontSize {
-            get {
-                return ResourceManager.GetString("txtFontSize", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Hand write.
-        /// </summary>
-        public static string txtHandWriteText {
-            get {
-                return ResourceManager.GetString("txtHandWriteText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Type text here:.
-        /// </summary>
-        public static string txtInputText {
-            get {
-                return ResourceManager.GetString("txtInputText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Graphic layer settings.
         /// </summary>
         public static string txtMenuItem {
             get {
                 return ResourceManager.GetString("txtMenuItem", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Navy.
-        /// </summary>
-        public static string txtNavy {
-            get {
-                return ResourceManager.GetString("txtNavy", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Times New Roman.
-        /// </summary>
-        public static string txtPrintedText {
-            get {
-                return ResourceManager.GetString("txtPrintedText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Text color:.
-        /// </summary>
-        public static string txtTextColor {
-            get {
-                return ResourceManager.GetString("txtTextColor", resourceCulture);
             }
         }
     }

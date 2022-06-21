@@ -168,40 +168,4 @@
   <data name="PageNumber" xml:space="preserve">
     <value>Page Number</value>
   </data>
-  <data name="MoveSignatureMenuItem" xml:space="preserve">
-    <value>Move signature here</value>
-  </data>
-  <data name="RotateSignatureMenuItem" xml:space="preserve">
-    <value>Move signature here and rotate</value>
-  </data>
-  <data name="AddTextLayerMenuItem" xml:space="preserve">
-    <value>Add text</value>
-  </data>
-  <data name="txtInputText" xml:space="preserve">
-    <value>Type text here:</value>
-  </data>
-  <data name="txtFontSize" xml:space="preserve">
-    <value>Font size:</value>
-  </data>
-  <data name="AddExtraSignatureMenuItem" xml:space="preserve">
-    <value>Extra sign here</value>
-  </data>
-  <data name="txtFontFamily" xml:space="preserve">
-    <value>Font:</value>
-  </data>
-  <data name="txtTextColor" xml:space="preserve">
-    <value>Text color:</value>
-  </data>
-  <data name="txtHandWriteText" xml:space="preserve">
-    <value>Hand write</value>
-  </data>
-  <data name="txtPrintedText" xml:space="preserve">
-    <value>Times New Roman</value>
-  </data>
-  <data name="txtBlack" xml:space="preserve">
-    <value>Black</value>
-  </data>
-  <data name="txtNavy" xml:space="preserve">
-    <value>Navy</value>
-  </data>
 </root>
