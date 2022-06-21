@@ -39,13 +39,14 @@ namespace Ascon.Pilot.SDK.GraphicLayerSample
         private double _scaleXY;
         private double _angle;
         private int _pageNumber;
+        private int _currentPage;
         private bool _includeStamp;
 
         [DllImport("user32.dll")]
         public static extern IntPtr GetForegroundWindow();
 
         [ImportingConstructor]
-        public GraphicLayerSample(IEventAggregator eventAggregator, IObjectModifier modifier, IObjectsRepository repository, IPilotDialogService dialogService)
+        public GraphicLayerSample(IEventAggregator eventAggregator, IObjectModifier modifier, IObjectsRepository repository, IPilotDialogService dialogService, IXpsViewer xpsViewer)
         {
             object accent = ColorConverter.ConvertFromString(dialogService.AccentColor);
             if (accent != null)
@@ -53,6 +54,7 @@ namespace Ascon.Pilot.SDK.GraphicLayerSample
             eventAggregator.Subscribe(this);
             _modifier = modifier;
             _repository = repository;
+            _currentPage = xpsViewer.CurrentPageNumber;
             IObservable<INotification> observable1 = repository.SubscribeNotification(NotificationKind.ObjectSignatureChanged);
             IObservable<INotification> observable2 = repository.SubscribeNotification(NotificationKind.ObjectFileChanged);
             observable1.Subscribe((IObserver<INotification>) this);
@@ -220,6 +222,10 @@ namespace Ascon.Pilot.SDK.GraphicLayerSample
                 IDataObject obj = await loaderForFirstSign.Load(value.ObjectId);
                 if (!obj.Files.Any(f => f.Name.Contains("Signature")))
                     return;
+                if (int.Parse(Settings.Default.PageNumber) != _currentPage)
+                {
+                    //вызов окна страницы подписи
+                }
                 AddGraphicLayer(obj);
             }
             else
