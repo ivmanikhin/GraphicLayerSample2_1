@@ -168,11 +168,11 @@
   <data name="PageNumber" xml:space="preserve">
     <value>Page Number</value>
   </data>
-  <data name="txtInputText" xml:space="preserve">
-    <value>Type text here:</value>
+  <data name="txtSetPageNumber" xml:space="preserve">
+    <value>Type page number here:</value>
   </data>
-  <data name="txtFontSize" xml:space="preserve">
-    <value>Font size:</value>
+  <data name="txtPageNumber" xml:space="preserve">
+    <value>Page number:</value>
   </data>
   <data name="txtFontFamily" xml:space="preserve">
     <value>Font:</value>

@@ -168,11 +168,11 @@
   <data name="txtMenuItem" xml:space="preserve">
     <value>Настройка графического слоя (test)</value>
   </data>
-  <data name="txtInputText" xml:space="preserve">
-    <value>Введите текст:</value>
+  <data name="txtSetPageNumber" xml:space="preserve">
+    <value>Введите номер страницы:</value>
   </data>
-  <data name="txtFontSize" xml:space="preserve">
-    <value>Размер шрифта:</value>
+  <data name="txtPageNumber" xml:space="preserve">
+    <value>Номер страницы:</value>
   </data>
   <data name="txtFontFamily" xml:space="preserve">
     <value>Шрифт:</value>

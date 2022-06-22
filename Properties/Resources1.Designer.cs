@@ -223,29 +223,11 @@ namespace GraphicLayerSample2_1.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Font size:.
-        /// </summary>
-        public static string txtFontSize {
-            get {
-                return ResourceManager.GetString("txtFontSize", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Hand write.
         /// </summary>
         public static string txtHandWriteText {
             get {
                 return ResourceManager.GetString("txtHandWriteText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Type text here:.
-        /// </summary>
-        public static string txtInputText {
-            get {
-                return ResourceManager.GetString("txtInputText", resourceCulture);
             }
         }
         
@@ -268,11 +250,29 @@ namespace GraphicLayerSample2_1.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Page number:.
+        /// </summary>
+        public static string txtPageNumber {
+            get {
+                return ResourceManager.GetString("txtPageNumber", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Times New Roman.
         /// </summary>
         public static string txtPrintedText {
             get {
                 return ResourceManager.GetString("txtPrintedText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Type page number here:.
+        /// </summary>
+        public static string txtSetPageNumber {
+            get {
+                return ResourceManager.GetString("txtSetPageNumber", resourceCulture);
             }
         }
         

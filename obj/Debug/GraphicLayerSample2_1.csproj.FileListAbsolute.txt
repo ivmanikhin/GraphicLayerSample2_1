@@ -15,8 +15,6 @@ F:\VisualStudioProjects\repos\Ascon.Pilot.SDK.GraphicLayerSample2_1\obj\Debug\Gr
 F:\VisualStudioProjects\repos\Ascon.Pilot.SDK.GraphicLayerSample2_1\obj\Debug\GraphicLayerSample2_1.ext2_MarkupCompile.lref
 F:\VisualStudioProjects\repos\Ascon.Pilot.SDK.GraphicLayerSample2_1\obj\Debug\GraphicLayerElementSettingsView.baml
 F:\VisualStudioProjects\repos\Ascon.Pilot.SDK.GraphicLayerSample2_1\obj\Debug\GraphicLayerSample2_1.ext2.g.resources
-F:\VisualStudioProjects\repos\Ascon.Pilot.SDK.GraphicLayerSample2_1\obj\Debug\TextEditorView.g.cs
-F:\VisualStudioProjects\repos\Ascon.Pilot.SDK.GraphicLayerSample2_1\obj\Debug\TextEditorView.baml
 D:\VisualStudioProjects\repos\GraphicLayerSample2_1\obj\Debug\GraphicLayerSample2_1.csproj.AssemblyReference.cache
 D:\VisualStudioProjects\repos\GraphicLayerSample2_1\obj\Debug\Resources.baml
 D:\VisualStudioProjects\repos\GraphicLayerSample2_1\obj\Debug\TextEditorView.g.cs
@@ -39,3 +37,5 @@ D:\VisualStudioProjects\repos\GraphicLayerSample2_1\obj\Debug\ru\GraphicLayerSam
 D:\VisualStudioProjects\repos\GraphicLayerSample2_1\obj\Debug\GraphicLayerSample2_1.csproj.CopyComplete
 C:\Users\manikhin_i\AppData\Local\ASCON\Pilot-ICE Enterprise\Development\GrapgicLayerSample2_1\9540.ttf
 F:\VisualStudioProjects\repos\Ascon.Pilot.SDK.GraphicLayerSample2_1\obj\Debug\Resources.baml
+F:\VisualStudioProjects\repos\Ascon.Pilot.SDK.GraphicLayerSample2_1\obj\Debug\PageNumberDialogView.g.cs
+F:\VisualStudioProjects\repos\Ascon.Pilot.SDK.GraphicLayerSample2_1\obj\Debug\PageNumberDialogView.baml

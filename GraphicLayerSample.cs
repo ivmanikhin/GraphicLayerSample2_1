@@ -28,6 +28,7 @@ namespace Ascon.Pilot.SDK.GraphicLayerSample
         private readonly IObjectModifier _modifier;
         private readonly IObjectsRepository _repository;
         private readonly IXpsViewer _xpsViewer;
+        private int _currentPage;
         private IPerson _currentPerson;
         private const string ServiceGraphicLayerMenu = "ServiceGraphicLayerMenu";
         private GraphicLayerElementSettingsView _settingsView;
@@ -142,9 +143,6 @@ namespace Ascon.Pilot.SDK.GraphicLayerSample
                 _scaleXY = 1.0;
             double.TryParse(Settings.Default.Angle, out _angle);
             int.TryParse(Settings.Default.PageNumber, out _pageNumber);
-            bool success = int.TryParse(Settings.Default.PageNumber, out _pageNumber);
-            if (success == false)
-                _pageNumber = 1;
             Enum.TryParse(Settings.Default.VerticalAligment, out _verticalAlignment);
             Enum.TryParse(Settings.Default.HorizontalAligment, out _horizontalAlignment);
         }
@@ -222,7 +220,7 @@ namespace Ascon.Pilot.SDK.GraphicLayerSample
                 IDataObject obj = await loaderForFirstSign.Load(value.ObjectId);
                 if (!obj.Files.Any(f => f.Name.Contains("Signature")))
                     return;
-                AddGraphicLayer(obj);
+                CheckPageNumber(obj);
             }
             else
             {
@@ -242,10 +240,29 @@ namespace Ascon.Pilot.SDK.GraphicLayerSample
                 IDataObject obj = await loader.Load(value.ObjectId);
                 if (!obj.Files.Any(f => f.Name.Contains("Signature")))
                     return;
-                AddGraphicLayer(obj);
+                CheckPageNumber(obj);
                 loader = null;
                 obj = null;
             }
+        }
+
+        //Сверка номера текущей страницы с номером страницы в настройках подписи:
+        private void CheckPageNumber(IDataObject dataObject)
+        {
+            CheckSettings(); //чтение настроек подписи
+            _currentPage = _xpsViewer.CurrentPageNumber + 1;  //определение текущей страницы
+            if (_pageNumber != _currentPage)  //если отличается от номера страницы в настройках, вызываем окно
+            {
+                PageNumberDialogView pageNumberDialogView = new PageNumberDialogView(_currentPage); //в окно отправляем информацию о текущей странице _currentPage
+                pageNumberDialogView.ShowDialog();
+                if (!pageNumberDialogView.cancel)
+                {
+                    _pageNumber = pageNumberDialogView.pageNumber; //задаём новый номер страницы из окна
+                    AddGraphicLayer(dataObject); //наносим подпись 
+                }
+            }
+            else
+                AddGraphicLayer(dataObject); //если номера совпали, просто наносим подпись
         }
 
         private void AddGraphicLayer(IDataObject dataObject)
