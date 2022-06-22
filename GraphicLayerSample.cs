@@ -27,6 +27,7 @@ namespace Ascon.Pilot.SDK.GraphicLayerSample
         private readonly string dec_separator = CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator;
         private readonly IObjectModifier _modifier;
         private readonly IObjectsRepository _repository;
+        private readonly IXpsViewer _xpsViewer;
         private IPerson _currentPerson;
         private const string ServiceGraphicLayerMenu = "ServiceGraphicLayerMenu";
         private GraphicLayerElementSettingsView _settingsView;
@@ -45,12 +46,13 @@ namespace Ascon.Pilot.SDK.GraphicLayerSample
         public static extern IntPtr GetForegroundWindow();
 
         [ImportingConstructor]
-        public GraphicLayerSample(IEventAggregator eventAggregator, IObjectModifier modifier, IObjectsRepository repository, IPilotDialogService dialogService)
+        public GraphicLayerSample(IEventAggregator eventAggregator, IObjectModifier modifier, IObjectsRepository repository, IPilotDialogService dialogService, IXpsViewer xpsViewer)
         {
             object accent = ColorConverter.ConvertFromString(dialogService.AccentColor);
             if (accent != null)
               Theme.ColorScheme.ColorScheme.Initialize((Color) accent, dialogService.Theme);
             eventAggregator.Subscribe(this);
+            _xpsViewer = xpsViewer;
             _modifier = modifier;
             _repository = repository;
             IObservable<INotification> observable1 = repository.SubscribeNotification(NotificationKind.ObjectSignatureChanged);

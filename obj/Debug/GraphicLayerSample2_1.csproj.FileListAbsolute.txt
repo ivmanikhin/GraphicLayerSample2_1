@@ -38,3 +38,4 @@ D:\VisualStudioProjects\repos\GraphicLayerSample2_1\obj\Debug\GraphicLayerSample
 D:\VisualStudioProjects\repos\GraphicLayerSample2_1\obj\Debug\ru\GraphicLayerSample2_1.ext2.resources.dll
 D:\VisualStudioProjects\repos\GraphicLayerSample2_1\obj\Debug\GraphicLayerSample2_1.csproj.CopyComplete
 C:\Users\manikhin_i\AppData\Local\ASCON\Pilot-ICE Enterprise\Development\GrapgicLayerSample2_1\9540.ttf
+F:\VisualStudioProjects\repos\Ascon.Pilot.SDK.GraphicLayerSample2_1\obj\Debug\Resources.baml
