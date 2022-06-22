@@ -10,8 +10,8 @@
              xmlns:Forms="clr-namespace:System.Windows.Forms;assembly=System.Windows.Forms" x:Class="Ascon.Pilot.SDK.GraphicLayerSample.PageNumberDialogView"
              mc:Ignorable="d"
              Title="{x:Static p:Resources.txtSetPageNumber}"
-             Width="332" 
-             Height="191" 
+             Width="396" 
+             Height="129" 
              ResizeMode="NoResize">
 
     <controls:DialogWindow.Resources>
@@ -27,26 +27,28 @@
 
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="203*"/>
-            <ColumnDefinition Width="8*"/>
+            <ColumnDefinition Width="39*"/>
+            <ColumnDefinition Width="34*"/>
+            <ColumnDefinition Width="551*"/>
+            <ColumnDefinition Width="25*"/>
         </Grid.ColumnDefinitions>
 
 
 
 
-        <DockPanel VerticalAlignment="Top"
+        <DockPanel VerticalAlignment="Bottom"
                    Margin="37,0,0,0"
-                   HorizontalAlignment="Left">
-            <TextBlock  VerticalAlignment="Top" TextWrapping="Wrap"
+                   HorizontalAlignment="Left" Grid.ColumnSpan="3">
+            <TextBlock  VerticalAlignment="Bottom" TextWrapping="Wrap"
                         Text="{x:Static p:Resources.txtPageNumber}"
                         Foreground="{DynamicResource NormalForeground}"
-                        FontSize="{DynamicResource DefaultFontSize}" Margin="0,6,0,0" />
+                        FontSize="14" Margin="0,6,0,6" />
             <TextBox x:Name="inputPageNumber"
                          VerticalAlignment="Top"
                          HorizontalAlignment="Left"
                          Margin="6,6,0,0"
                          Text="1"
-                         InputScope="Digits"/>
+                         InputScope="Digits" FontSize="14"/>
             <!--<ComboBox x:Name="ComboBoxFontFamily" 
                          VerticalAlignment="Bottom"
                          HorizontalAlignment="Left"
@@ -61,7 +63,7 @@
 
         <DockPanel VerticalAlignment="Bottom"
                    Margin="0,0,0,0"
-                   HorizontalAlignment="Right" Grid.ColumnSpan="2">
+                   HorizontalAlignment="Right" Grid.ColumnSpan="2" Grid.Column="2">
 
             <Button IsDefault="True"
                     IsEnabled="True"
