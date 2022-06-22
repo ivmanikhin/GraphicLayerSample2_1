@@ -117,9 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="RotateSignatureMenuItem" xml:space="preserve">
-    <value>Перенести подпись сюда и повернуть</value>
-  </data>
   <data name="AddStamp" xml:space="preserve">
     <value>Добавить штамп после полного согласования</value>
   </data>
@@ -147,9 +144,6 @@
   <data name="LinkToCorner" xml:space="preserve">
     <value>Привязка к углу страницы</value>
   </data>
-  <data name="MoveSignatureMenuItem" xml:space="preserve">
-    <value>Перенести подпись сюда</value>
-  </data>
   <data name="OffsetX" xml:space="preserve">
     <value>X</value>
   </data>
@@ -174,17 +168,11 @@
   <data name="txtMenuItem" xml:space="preserve">
     <value>Настройка графического слоя (test)</value>
   </data>
-  <data name="AddTextLayerMenuItem" xml:space="preserve">
-    <value>Добавить надпись</value>
-  </data>
   <data name="txtInputText" xml:space="preserve">
     <value>Введите текст:</value>
   </data>
   <data name="txtFontSize" xml:space="preserve">
     <value>Размер шрифта:</value>
-  </data>
-  <data name="AddExtraSignatureMenuItem" xml:space="preserve">
-    <value>Дополнительная подпись здесь</value>
   </data>
   <data name="txtFontFamily" xml:space="preserve">
     <value>Шрифт:</value>

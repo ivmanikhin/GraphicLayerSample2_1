@@ -40,9 +40,9 @@ namespace Ascon.Pilot.SDK.GraphicLayerSample {
     
     
     /// <summary>
-    /// PageNumberDialogView
+    /// TextEditorView
     /// </summary>
-    public partial class PageNumberDialogView : Ascon.Pilot.Theme.Controls.DialogWindow, System.Windows.Markup.IComponentConnector {
+    public partial class TextEditorView : Ascon.Pilot.Theme.Controls.DialogWindow, System.Windows.Markup.IComponentConnector {
         
         
         #line 34 "..\..\PageNumberDialogView.xaml"

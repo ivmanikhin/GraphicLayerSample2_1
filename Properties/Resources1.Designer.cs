@@ -61,29 +61,11 @@ namespace GraphicLayerSample2_1.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Extra sign here.
-        /// </summary>
-        public static string AddExtraSignatureMenuItem {
-            get {
-                return ResourceManager.GetString("AddExtraSignatureMenuItem", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Add stamp.
         /// </summary>
         public static string AddStamp {
             get {
                 return ResourceManager.GetString("AddStamp", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Add text.
-        /// </summary>
-        public static string AddTextLayerMenuItem {
-            get {
-                return ResourceManager.GetString("AddTextLayerMenuItem", resourceCulture);
             }
         }
         
@@ -160,15 +142,6 @@ namespace GraphicLayerSample2_1.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Move signature here.
-        /// </summary>
-        public static string MoveSignatureMenuItem {
-            get {
-                return ResourceManager.GetString("MoveSignatureMenuItem", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to X.
         /// </summary>
         public static string OffsetX {
@@ -201,15 +174,6 @@ namespace GraphicLayerSample2_1.Properties {
         public static string Path {
             get {
                 return ResourceManager.GetString("Path", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Move signature here and rotate.
-        /// </summary>
-        public static string RotateSignatureMenuItem {
-            get {
-                return ResourceManager.GetString("RotateSignatureMenuItem", resourceCulture);
             }
         }
         
