@@ -137,12 +137,16 @@ namespace Ascon.Pilot.SDK.GraphicLayerSample
         {
             _filePath = Settings.Default.Path;
             _includeStamp = Settings.Default.IncludeStamp;
-            double.TryParse(Settings.Default.X, out _xOffset);
-            double.TryParse(Settings.Default.Y, out _yOffset);
+            if (!double.TryParse(Settings.Default.X, out _xOffset))
+                _xOffset = 0;
+            if (!double.TryParse(Settings.Default.Y, out _yOffset))
+                _yOffset = 0;
             if (!double.TryParse(Settings.Default.Scale.Replace(".", dec_separator).Replace(",", dec_separator), out _scaleXY))
                 _scaleXY = 1.0;
-            double.TryParse(Settings.Default.Angle, out _angle);
-            int.TryParse(Settings.Default.PageNumber, out _pageNumber);
+            if (!double.TryParse(Settings.Default.Angle, out _angle))
+                _angle = 0;
+            if (!int.TryParse(Settings.Default.PageNumber, out _pageNumber))
+                _pageNumber = 1;
             Enum.TryParse(Settings.Default.VerticalAligment, out _verticalAlignment);
             Enum.TryParse(Settings.Default.HorizontalAligment, out _horizontalAlignment);
         }
@@ -259,6 +263,11 @@ namespace Ascon.Pilot.SDK.GraphicLayerSample
                 {
                     _pageNumber = pageNumberDialogView.pageNumber; //задаём новый номер страницы из окна
                     AddGraphicLayer(dataObject); //наносим подпись 
+                }
+                else
+                {
+                    _pageNumber = _currentPage;
+                    AddGraphicLayer(dataObject);
                 }
             }
             else

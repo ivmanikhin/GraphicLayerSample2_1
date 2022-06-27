@@ -192,4 +192,10 @@
   <data name="txtPrintedText" xml:space="preserve">
     <value>Печатный</value>
   </data>
+  <data name="MoveSignatureMenuItem" xml:space="preserve">
+    <value>Перенести подпись сюда</value>
+  </data>
+  <data name="SignHereMenuItem" xml:space="preserve">
+    <value>Подписать здесь</value>
+  </data>
 </root>

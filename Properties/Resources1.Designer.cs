@@ -142,6 +142,15 @@ namespace GraphicLayerSample2_1.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Move signature here.
+        /// </summary>
+        public static string MoveSignatureMenuItem {
+            get {
+                return ResourceManager.GetString("MoveSignatureMenuItem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to X.
         /// </summary>
         public static string OffsetX {
@@ -183,6 +192,15 @@ namespace GraphicLayerSample2_1.Properties {
         public static string Scale {
             get {
                 return ResourceManager.GetString("Scale", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sign here.
+        /// </summary>
+        public static string SignHereMenuItem {
+            get {
+                return ResourceManager.GetString("SignHereMenuItem", resourceCulture);
             }
         }
         

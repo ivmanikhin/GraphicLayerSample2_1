@@ -66,11 +66,7 @@ namespace Ascon.Pilot.SDK.GraphicLayerSample
             }
         }
 
-        private void OnCancelButtonClicked(object sender, RoutedEventArgs e)
-        {
-            cancel = true;
-            Close();
-        }
+
 
     }
 }

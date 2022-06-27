@@ -49,13 +49,6 @@
                          Margin="6,6,0,0"
                          Text="1"
                          InputScope="Digits" FontSize="14"/>
-            <!--<ComboBox x:Name="ComboBoxFontFamily" 
-                         VerticalAlignment="Bottom"
-                         HorizontalAlignment="Left"
-                         Margin="6,6,0,0">
-                <ComboBoxItem IsSelected="True" Content="Times New Roman"></ComboBoxItem>
-                <ComboBoxItem Content="Katherine Plus"></ComboBoxItem>
-            </ComboBox>-->
 
             <ListView Margin="6, 6, 0, 0" BorderThickness="0"/>
             <ListView Margin="6, 6, 0, 0" BorderThickness="0"/>
@@ -69,12 +62,6 @@
                     IsEnabled="True"
                     Content="OK"
                     Click="OnOkButtonClicked"/>
-
-            <Button IsDefault="True"
-                    IsEnabled="True"
-                    Content="{x:Static p:Resources.CancelBtn}"
-                    Click="OnCancelButtonClicked"
-                    Margin="6,0,0,0"/>
 
         </DockPanel>
 

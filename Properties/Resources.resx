@@ -192,4 +192,10 @@
   <data name="txtNavy" xml:space="preserve">
     <value>Navy</value>
   </data>
+  <data name="MoveSignatureMenuItem" xml:space="preserve">
+    <value>Move signature here</value>
+  </data>
+  <data name="SignHereMenuItem" xml:space="preserve">
+    <value>Sign here</value>
+  </data>
 </root>
