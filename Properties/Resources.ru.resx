@@ -166,7 +166,7 @@
     <value>Настройка графического слоя</value>
   </data>
   <data name="txtMenuItem" xml:space="preserve">
-    <value>Настройка графического слоя (test)</value>
+    <value>Настройка графического слоя</value>
   </data>
   <data name="txtSetPageNumber" xml:space="preserve">
     <value>Введите номер страницы:</value>
