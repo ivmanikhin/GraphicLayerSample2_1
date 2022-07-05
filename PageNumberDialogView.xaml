@@ -12,7 +12,8 @@
              Title="{x:Static p:Resources.txtSetPageNumber}"
              Width="396" 
              Height="129" 
-             ResizeMode="NoResize">
+             ResizeMode="NoResize"
+             WindowStartupLocation="CenterScreen">
 
     <controls:DialogWindow.Resources>
         <ResourceDictionary>

@@ -43,6 +43,7 @@ namespace Ascon.Pilot.SDK.GraphicLayerSample
         private int _pageNumber;
         private bool _includeStamp;
 
+
         [DllImport("user32.dll")]
         public static extern IntPtr GetForegroundWindow();
 
