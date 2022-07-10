@@ -17,7 +17,6 @@ F:\VisualStudioProjects\repos\Ascon.Pilot.SDK.GraphicLayerSample2_1\obj\Debug\Gr
 F:\VisualStudioProjects\repos\Ascon.Pilot.SDK.GraphicLayerSample2_1\obj\Debug\GraphicLayerSample2_1.ext2.g.resources
 D:\VisualStudioProjects\repos\GraphicLayerSample2_1\obj\Debug\GraphicLayerSample2_1.csproj.AssemblyReference.cache
 D:\VisualStudioProjects\repos\GraphicLayerSample2_1\obj\Debug\Resources.baml
-D:\VisualStudioProjects\repos\GraphicLayerSample2_1\obj\Debug\TextEditorView.g.cs
 D:\VisualStudioProjects\repos\GraphicLayerSample2_1\obj\Debug\GraphicLayerElementSettingsView.g.cs
 D:\VisualStudioProjects\repos\GraphicLayerSample2_1\obj\Debug\GraphicLayerSample2_1.ext2_MarkupCompile.cache
 D:\VisualStudioProjects\repos\GraphicLayerSample2_1\obj\Debug\GraphicLayerSample2_1.ext2_MarkupCompile.lref
@@ -26,7 +25,6 @@ D:\VisualStudioProjects\repos\GraphicLayerSample2_1\obj\Debug\GraphicLayerSample
 C:\Users\ivman\AppData\Local\ASCON\Pilot-ICE Enterprise\Development\GraphicLayerSample2_1\GraphicLayerSample2_1.ext2.dll
 C:\Users\ivman\AppData\Local\ASCON\Pilot-ICE Enterprise\Development\GraphicLayerSample2_1\GraphicLayerSample2_1.ext2.pdb
 C:\Users\ivman\AppData\Local\ASCON\Pilot-ICE Enterprise\Development\GraphicLayerSample2_1\ru\GraphicLayerSample2_1.ext2.resources.dll
-D:\VisualStudioProjects\repos\GraphicLayerSample2_1\obj\Debug\TextEditorView.baml
 D:\VisualStudioProjects\repos\GraphicLayerSample2_1\obj\Debug\GraphicLayerElementSettingsView.baml
 D:\VisualStudioProjects\repos\GraphicLayerSample2_1\obj\Debug\GraphicLayerSample2_1.ext2.g.resources
 D:\VisualStudioProjects\repos\GraphicLayerSample2_1\obj\Debug\GraphicLayerSample2_1.Properties.Resources.resources
@@ -39,3 +37,5 @@ C:\Users\manikhin_i\AppData\Local\ASCON\Pilot-ICE Enterprise\Development\Grapgic
 F:\VisualStudioProjects\repos\Ascon.Pilot.SDK.GraphicLayerSample2_1\obj\Debug\Resources.baml
 F:\VisualStudioProjects\repos\Ascon.Pilot.SDK.GraphicLayerSample2_1\obj\Debug\PageNumberDialogView.g.cs
 F:\VisualStudioProjects\repos\Ascon.Pilot.SDK.GraphicLayerSample2_1\obj\Debug\PageNumberDialogView.baml
+D:\VisualStudioProjects\repos\GraphicLayerSample2_1\obj\Debug\PageNumberDialogView.g.cs
+D:\VisualStudioProjects\repos\GraphicLayerSample2_1\obj\Debug\PageNumberDialogView.baml

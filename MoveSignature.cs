@@ -35,8 +35,8 @@ namespace Ascon.Pilot.SDK.GraphicLayerSample
         private double _angle;
         private int _pageNumber;
         //private int signatureNumber = 0;
-        private VerticalAlignment _verticalAlignment;
-        private HorizontalAlignment _horizontalAlignment;
+        //private VerticalAlignment _verticalAlignment = VerticalAlignment.Top;
+        //private HorizontalAlignment _horizontalAlignment = HorizontalAlignment.Left;
         //private bool gotAccess = false;
         bool notFrozen = false;
         //private AccessLevel _accessLevel = AccessLevel.None;
@@ -84,13 +84,15 @@ namespace Ascon.Pilot.SDK.GraphicLayerSample
         public void OnMenuItemClick(string name, XpsRenderClickPointContext context)
         {
             CheckSettings();
-            _pageNumber = context.PageNumber + 1; //задание номера страницы
-            _xOffset = (context.ClickPoint.X - 10 / _scaleXY) * 25.4 / 96; //установка координат подписи в точку клика мышом
-            _yOffset = (context.ClickPoint.Y - 4 / _scaleXY) * 25.4 / 96;
-
+            using (System.Drawing.Image img = System.Drawing.Image.FromFile(_filePath))
+            {
+                _xOffset = (context.ClickPoint.X - img.Width * _scaleXY * 0.5); //установка координат подписи в точку клика мышом
+                _yOffset = (context.ClickPoint.Y - img.Height * _scaleXY * 0.5);
+            };
+            _pageNumber = context.PageNumber + 1;
             if (name == MoveSignatureMenuItem)
             {
-                MoveSignatureHere(context);
+                MoveSignatureHere(context.DataObject);
             }
 
             else if (name == SignHereMenuItem)
@@ -101,9 +103,9 @@ namespace Ascon.Pilot.SDK.GraphicLayerSample
         }
 
 
-        public void MoveSignatureHere(XpsRenderClickPointContext context)
+        public void MoveSignatureHere(IDataObject dataObject)
             {
-            foreach (IFile file in context.DataObject.Files)
+            foreach (IFile file in dataObject.Files)
             {
                 if (file.Name.Equals("PILOT_GRAPHIC_LAYER_ELEMENT_" + ToGuid(_currentPerson.Id)))
                 {
@@ -112,10 +114,11 @@ namespace Ascon.Pilot.SDK.GraphicLayerSample
                     GraphicLayerElement element = (GraphicLayerElement)xmlSerializer.Deserialize(stream);
                     element.VerticalAlignment = VerticalAlignment.Top;
                     element.HorizontalAlignment = HorizontalAlignment.Left;
-                    element.PageNumber = context.PageNumber;
-                    element.OffsetX = context.ClickPoint.X - 10 / _scaleXY;
-                    element.OffsetY = context.ClickPoint.Y - 4 / _scaleXY;
-                    IObjectBuilder objectBuilder = _modifier.Edit(context.DataObject);
+                    element.PageNumber = _pageNumber - 1;
+                    element.OffsetX = _xOffset;
+                    element.OffsetY = _yOffset;
+                    element.Scale = new Point(_scaleXY, _scaleXY);
+                    IObjectBuilder objectBuilder = _modifier.Edit(dataObject);
                     using (MemoryStream memoryStream = new MemoryStream())
                     {
                         new XmlSerializer(typeof(GraphicLayerElement)).Serialize(memoryStream, element);
@@ -183,7 +186,7 @@ namespace Ascon.Pilot.SDK.GraphicLayerSample
 
         // Рисование главной подписи текущего пользователя
         private void SignHere(IDataObject dataObject)
-        {
+        {   
             if (string.IsNullOrEmpty(_filePath))
                 return;
             IObjectBuilder objectBuilder = _modifier.Edit(dataObject);
@@ -196,7 +199,17 @@ namespace Ascon.Pilot.SDK.GraphicLayerSample
                 Point scale = new Point(_scaleXY, _scaleXY);
                 string name = "PILOT_GRAPHIC_LAYER_ELEMENT_" + ToGuid(_currentPerson.Id); //имя файла с записью свойств картинки
                                                                                           //ПРИВЯЗАНО К ЧЕЛОВЕКУ В ВИДЕ GUID C НУЛЯМИ (В ОСНОВНОМ)
-                GraphicLayerElement o = GraphicLayerElementCreator.Create(_xOffset, _yOffset, scale, _angle, position, _verticalAlignment, _horizontalAlignment, "bitmap", ToGuid(_currentPerson.Id), _pageNumber, true);
+                GraphicLayerElement o = GraphicLayerElementCreator.Create(_xOffset * 25.4 / 96,
+                                                                          _yOffset * 25.4 / 96,
+                                                                          scale,
+                                                                          _angle,
+                                                                          position,
+                                                                          VerticalAlignment.Top,
+                                                                          HorizontalAlignment.Left,
+                                                                          "bitmap",
+                                                                          ToGuid(_currentPerson.Id),
+                                                                          _pageNumber,
+                                                                          true);
                 using (MemoryStream memoryStream2 = new MemoryStream())
                 {
                     new XmlSerializer(typeof(GraphicLayerElement)).Serialize(memoryStream2, o);

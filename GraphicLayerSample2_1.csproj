@@ -14,7 +14,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>C:\Users\manikhin_i\AppData\Local\ASCON\Pilot-ICE Enterprise\Development\GrapgicLayerSample2_1\</OutputPath>
+    <OutputPath>C:\Users\ivman\AppData\Local\ASCON\Pilot-ICE Enterprise\Development\GraphicLayerSample2_1\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -91,12 +91,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="9540.ttf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <Resource Include="Fonts\9540.ttf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
